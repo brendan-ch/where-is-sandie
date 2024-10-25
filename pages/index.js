@@ -67,6 +67,8 @@ export default function Home() {
       const mapInstance = new window.google.maps.Map(mapRef.current, {
         center: { lat: coordinates.lat, lng: coordinates.lng },
         zoom: 18,
+        // hide all buttons within the Google Maps UI
+        disableDefaultUI: true,
       });
       setMap(mapInstance);
 
@@ -96,14 +98,14 @@ export default function Home() {
   }, [coordinates, isNapping]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
         <title>Where is Sandie?</title>
       </Head>
 
-      <h1 className={styles.header}>
-        {isNapping ? 'Sandie is Currently Napping at Home' : 'Find Sandie on Campus!'}
-      </h1>
+      <div className={styles.overlay}>
+        <p>{isNapping ? 'Sandie is Currently Napping at Home' : 'Find Sandie on Campus!'}</p>
+      </div>
 
       {!isNapping ? (
         <>
@@ -116,7 +118,7 @@ export default function Home() {
           <div id="map" style={{ height: '100vh', width: '100%' }} ref={mapRef}></div>
         </>
       ) : (
-        <div id="sleepingCorgi" className="sleepingCorgi">
+        <div id="sleepingCorgi" className={styles.sleepingCorgi}>
           <img src="/assets/sleep.jpg" alt="Sleeping Corgi" />
         </div>
       )}
